@@ -4,21 +4,24 @@ import 'l10n/strings.dart';
 import 'screens/home_screen.dart';
 import 'state/podflow_controller.dart';
 
-void main() {
-  runApp(PodFlowApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final controller = PodFlowController();
+  await controller.init();
+  runApp(PodFlowApp(controller: controller));
 }
 
 class PodFlowApp extends StatelessWidget {
-  PodFlowApp({super.key});
+  final PodFlowController controller;
 
-  final PodFlowController _controller = PodFlowController();
+  const PodFlowApp({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      animation: _controller,
+      animation: controller,
       builder: (context, _) {
-        final settings = _controller.settings;
+        final settings = controller.settings;
         final strings = PodFlowStrings(settings.speechStyle);
 
         return MaterialApp(
@@ -38,7 +41,7 @@ class PodFlowApp extends StatelessWidget {
               brightness: Brightness.dark,
             ),
           ),
-          home: HomeScreen(controller: _controller),
+          home: HomeScreen(controller: controller),
         );
       },
     );

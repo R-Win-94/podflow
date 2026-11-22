@@ -1,8 +1,8 @@
-// lib/screens/home_screen.dart
 import 'package:material_ui/material_ui.dart';
 import '../l10n/strings.dart';
 import '../state/podflow_controller.dart';
 import 'quick_settings_sheet.dart';
+import 'settings_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   final PodFlowController controller;
@@ -22,13 +22,13 @@ class HomeScreen extends StatelessWidget {
             tooltip: strings.settings,
             icon: const Icon(Icons.tune),
             onPressed: () {
-              showModalBottomSheet<void>(
-                context: context,
-                showDragHandle: true,
-                builder: (_) => QuickSettingsSheet(controller: controller),
-              );
-            },
-          ),
+              Navigator.of(context).push(
+                MaterialPageRoute<void>(
+                  builder: (_) => SettingsScreen(controller: controller),
+      ),
+    );
+  },
+),
         ],
       ),
       body: ListView(
